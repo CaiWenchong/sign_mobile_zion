@@ -1,3 +1,3 @@
-import Sign from './Sign.vue';
+import Downloader from './Downloader.vue';
 
-export default { Sign };
+export default { Downloader };

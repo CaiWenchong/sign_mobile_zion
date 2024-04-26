@@ -24,10 +24,11 @@
 <script>
 import CryptoJS from "crypto-js";
 export default {
-  name: "Sign",
-  props: ["globalData", "url", "actionflow_id"],
+  name: "Downloader",
+  props: ["globalData", "url", "actionflow_id", "signId"],
   data() {
     return {
+      mdapi: null,
       touchPressed: false,
       ctx: null,
       strokeStyle: "#000000", //书写颜色
@@ -41,7 +42,7 @@ export default {
         // zion项目的api地址
         // gql_apiUrl:
         //   "https://zion-app.functorz.com/zero/JmAxbl1kYqo/api/graphql-v2",
-          gql_apiUrl:"",
+        gql_apiUrl: "",
         // zion项目地址对应的authorization
         gql_authorization:
           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJhZG1pbiJdLCJaRVJPX1VTRVJfSUQiOiIxMDA5OTk5OTk5OTk5OTk5IiwiZGVmYXVsdFJvbGUiOiJhZG1pbiIsImhhc3VyYV9jbGFpbXMiOnsieC1oYXN1cmEtdXNlci1pZCI6IjEwMDk5OTk5OTk5OTk5OTkiLCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbImFkbWluIl0sIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6ImFkbWluIn0sInplcm8iOnt9fQ.x0qj8zJQgzhk55rDbeosmSRe5hSie15rXHkt4WNyWAc",
@@ -50,7 +51,7 @@ export default {
         default_system_system: null,
         system_model_list: [],
         // actionflowmain_id: "5e5e155d-7b3c-4771-bf94-ceb597cbb666",
-        actionflowmain_id:"",
+        actionflowmain_id: "",
         token: "", //调试token
         env: "H5", //1.MP-WEIXIN 2.H5
       },
@@ -66,7 +67,14 @@ export default {
       this.storeConfig.actionflowmain_id=this.$props.actionflow_id
     }
 
-  
+
+    // if (this.$props.url && this.$props.actionflow_id) {
+    //   this.storeConfig.gql_apiUrl = this.$props.url;
+    //   this.storeConfig.gql_authorization = this.$props.actionflow_id;
+    // } else {
+    //   console.error("未传url和actionflow_id参数");
+    // }
+
     this.$nextTick(() => {
       let canvas = document.getElementById("myCanvas");
       this.canvas = canvas;
