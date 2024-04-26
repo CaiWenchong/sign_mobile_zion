@@ -60,12 +60,10 @@ export default {
   mounted() {
     console.log("props:", this.$props);
 
-    if (!this.$props.url && !this.$props.actionflow_id) {
-      console.log("url或者actionflow_id为空");
-    }else{
+   
       this.storeConfig.gql_apiUrl=this.$props.url 
       this.storeConfig.actionflowmain_id=this.$props.actionflow_id
-    }
+    
 
 
     // if (this.$props.url && this.$props.actionflow_id) {
