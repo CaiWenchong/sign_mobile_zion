@@ -3,8 +3,9 @@
     "Downloader": {
       "name": "Downloader",
       "imagePath": "preview/downloader.png",
-      "description": "移动端手写签名组件",
+      "description": "手机端签名自定义组件",
       "itemInputs": [
+        
         {
           "fieldName": "url",
           "type": "TEXT"
@@ -16,5 +17,5 @@
       ]
     }
   },
-  "version": "0.0.5"
+  "version": "0.0.6"
 }
