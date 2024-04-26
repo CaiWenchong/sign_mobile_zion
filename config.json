@@ -6,6 +6,10 @@
       "description": "导出excel自定义组件",
       "itemInputs": [
         {
+          "fieldName": "signId",
+          "type": "INTEGER"
+        },
+        {
           "fieldName": "url",
           "type": "TEXT"
         },
@@ -16,5 +20,5 @@
       ]
     }
   },
-  "version": "0.0.8"
+  "version": "0.0.9"
 }

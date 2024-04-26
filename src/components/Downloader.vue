@@ -25,7 +25,7 @@
 import CryptoJS from "crypto-js";
 export default {
   name: "Downloader",
-  props: ["globalData", "url", "actionflow_id"],
+  props: ["globalData", "url", "actionflow_id", "signId"],
   data() {
     return {
       mdapi: null,
