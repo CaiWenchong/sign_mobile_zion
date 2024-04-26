@@ -1,14 +1,10 @@
 {
   "customComponentItems": {
-    "Downloader": {
-      "name": "Downloader",
+    "Sign": {
+      "name": "Sign",
       "imagePath": "preview/downloader.png",
-      "description": "导出excel自定义组件",
+      "description": "移动端手写签名组件-zion",
       "itemInputs": [
-        {
-          "fieldName": "signId",
-          "type": "INTEGER"
-        },
         {
           "fieldName": "url",
           "type": "TEXT"
@@ -20,5 +16,5 @@
       ]
     }
   },
-  "version": "0.1.0"
+  "version": "0.1.1"
 }
