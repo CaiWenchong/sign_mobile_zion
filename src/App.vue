@@ -7,7 +7,8 @@ const setGlobalData = (obj: any) => {
   globalData.value = obj.value;
 }
 
-
+const url = ref("");
+const actionflow_id = ref("39b8c22f-5d78-446b-a046-a2967986da5c")
 
 </script>
 
