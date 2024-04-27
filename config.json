@@ -12,9 +12,25 @@
         {
           "fieldName": "actionflow_id",
           "type": "TEXT"
+        },
+        {
+          "fieldName": "table_name",
+          "type": "TEXT"
+        },
+        {
+          "fieldName": "table_fields",
+          "type": "TEXT"
+        },
+        {
+          "fieldName": "image_field",
+          "type": "TEXT"
+        },
+        {
+          "fieldName": "image_id_field",
+          "type": "TEXT"
         }
       ]
     }
   },
-  "version": "0.1.3"
+  "version": "0.1.4"
 }

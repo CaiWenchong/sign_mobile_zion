@@ -10,8 +10,16 @@ const setGlobalData = (obj: any) => {
 // const url = ref("https://zion-app.functorz.com/zero/JmAxbl1kYqo/api/graphql-v2");
 // const actionflow_id = ref("5e5e155d-7b3c-4771-bf94-ceb597cbb666")
 
-const url = ref("");
-const actionflow_id = ref("39b8c22f-5d78-446b-a046-a2967986da5c")
+const url = ref("https://zion-app.functorz.com/zero/1qjzLgQq1g0/api/graphql-v2");
+const actionflow_id = ref("5e5e155d-7b3c-4771-bf94-ceb597cbb666")
+const table_name = ref("sign_picture")
+const table_fields = ref("id pic_id url{id url}")
+const image_field = ref("url_id")
+const image_id_field = ref("pic_id")
+
+
+
+
 
 </script>
 
@@ -22,6 +30,10 @@ const actionflow_id = ref("39b8c22f-5d78-446b-a046-a2967986da5c")
     playauth=""
     :url="url"
     :actionflow_id="actionflow_id"
+    :table_name="table_name"
+    :table_fields="table_fields"
+    :image_field="image_field"
+    :image_id_field="image_id_field"
     :global-data="globalData"
     :set-global-data="setGlobalData"
     :course_log_pk="0"

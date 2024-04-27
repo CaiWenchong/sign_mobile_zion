@@ -23,9 +23,22 @@
 
 <script>
 import CryptoJS from "crypto-js";
+
+// 引入
+import { messageControl } from '/src/components/message.js'
+
 export default {
   name: "Sign",
-  props: ["globalData", "url", "actionflow_id"],
+  props: [
+    "globalData",
+    "url",
+    "actionflow_id",
+    "table_name",
+    "table_fields",
+    "image_field",
+    "image_id_field",
+  ],
+
   data() {
     return {
       touchPressed: false,
@@ -43,8 +56,7 @@ export default {
         //   "https://zion-app.functorz.com/zero/JmAxbl1kYqo/api/graphql-v2",
         gql_apiUrl: "",
         // zion项目地址对应的authorization
-        gql_authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJhZG1pbiJdLCJaRVJPX1VTRVJfSUQiOiIxMDA5OTk5OTk5OTk5OTk5IiwiZGVmYXVsdFJvbGUiOiJhZG1pbiIsImhhc3VyYV9jbGFpbXMiOnsieC1oYXN1cmEtdXNlci1pZCI6IjEwMDk5OTk5OTk5OTk5OTkiLCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbImFkbWluIl0sIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6ImFkbWluIn0sInplcm8iOnt9fQ.x0qj8zJQgzhk55rDbeosmSRe5hSie15rXHkt4WNyWAc",
+        gql_authorization: "",
 
         is_multi_app: false,
         default_system_system: null,
@@ -54,13 +66,24 @@ export default {
         token: "", //调试token
         env: "H5", //1.MP-WEIXIN 2.H5
       },
+      message:null,
     };
   },
   mounted() {
+    this.message=new messageControl()
     console.log("props:", this.$props);
 
+    if (!this.$props.table_name && !this.$props.table_fields) {
+      console.error("table_name和table_fields不能为空");
+    }
+
+    if (!this.$props.image_field && !this.$props.image_id_field) {
+      console.error("image_field和image_id_field不能为空");
+    }
+
+    // 初始化配置
     if (!this.$props.url && !this.$props.actionflow_id) {
-      console.log("url或者actionflow_id为空");
+      console.error("url或者actionflow_id为空");
     } else {
       this.storeConfig.gql_apiUrl = this.$props.url;
       this.storeConfig.actionflowmain_id = this.$props.actionflow_id;
@@ -406,12 +429,18 @@ export default {
 
     // 保存服务器
     saveImageInfo() {
+
+      
+  
       let b = this.canvas.toDataURL();
+
       this.local_umedia(b).then((imageRes) => {
+        console.log("imageRes:", imageRes);
         if (imageRes.id) {
           this.insertSignPictureOne(imageRes.id).then((res) => {
             if (res.id) {
               this.$props.globalData.sign_image_id = imageRes.id;
+              message.message({ type :"success",content: '提交成功，请勿重复提交' })
             }
           });
         }
@@ -420,14 +449,29 @@ export default {
     },
 
     insertSignPictureOne(signImageId) {
+      if (!this.$props.table_name || !this.$props.table_fields) {
+        console.error("提交失败,table_name和table_fields为空");
+        return;
+      }
+
+      if (!this.$props.image_field && !this.$props.image_id_field) {
+        console.error("提交失败,image_field和image_id_field为空");
+        return;
+      }
+      let image = this.$props.image_field ;
+
+      let imageId = this.$props.image_id_field;
+
+      let obj = {};
+      obj[image]=signImageId
+      obj[imageId]=signImageId
+
+    
       let params = {
-        operation: "insert_sign_picture_one",
-        object: {
-          pic_url_id: signImageId,
-          pic_id: signImageId,
-        },
+        operation: `insert_${this.$props.table_name}_one`,
+        object:obj,
         isloading: false,
-        field_string: `id pic_id pic_url{id url} `,
+        field_string: `${this.$props.table_fields}`,
       };
       return this.mutation(params);
     },
