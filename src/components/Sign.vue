@@ -73,21 +73,26 @@ export default {
     this.message=new messageControl()
     console.log("props:", this.$props);
 
-    if (!this.$props.table_name && !this.$props.table_fields) {
-      console.error("table_name和table_fields不能为空");
-    }
-
-    if (!this.$props.image_field && !this.$props.image_id_field) {
-      console.error("image_field和image_id_field不能为空");
-    }
-
-    // 初始化配置
-    if (!this.$props.url && !this.$props.actionflow_id) {
+      // 初始化配置
+      if (!this.$props.url && !this.$props.actionflow_id) {
+      this.message.message({ type :"error",content: 'url或者actionflow_id为空' })
       console.error("url或者actionflow_id为空");
     } else {
       this.storeConfig.gql_apiUrl = this.$props.url;
       this.storeConfig.actionflowmain_id = this.$props.actionflow_id;
     }
+    
+    if (!this.$props.table_name && !this.$props.table_fields) {
+      this.message.message({ type :"error",content: 'table_name和table_fields不能为空' })
+      console.error("table_name和table_fields不能为空");
+    }
+
+    if (!this.$props.image_field && !this.$props.image_id_field) {
+      this.message.message({ type :"error",content: 'image_field和image_id_field不能为空' })
+      console.error("image_field和image_id_field不能为空");
+    }
+
+  
 
     this.$nextTick(() => {
       let canvas = document.getElementById("myCanvas");
@@ -440,7 +445,7 @@ export default {
           this.insertSignPictureOne(imageRes.id).then((res) => {
             if (res.id) {
               this.$props.globalData.sign_image_id = imageRes.id;
-              message.message({ type :"success",content: '提交成功，请勿重复提交' })
+              this.message.message({ type :"success",content: '提交成功，请勿重复提交' })
             }
           });
         }
@@ -449,12 +454,23 @@ export default {
     },
 
     insertSignPictureOne(signImageId) {
+         // 初始化配置
+    if (!this.$props.url && !this.$props.actionflow_id) {
+      this.message.message({ type :"error",content: 'url或者actionflow_id为空' })
+      console.error("提交失败:url或者actionflow_id为空");
+      return;
+    } 
+
+
+
       if (!this.$props.table_name || !this.$props.table_fields) {
-        console.error("提交失败,table_name和table_fields为空");
+        this.message.message({ type :"error",content: '提交失败,table_name和table_fields为空' })
+        console.error("提交失败:table_name和table_fields为空");
         return;
       }
 
       if (!this.$props.image_field && !this.$props.image_id_field) {
+        this.message.message({ type :"error",content: '提交失败,image_field和image_id_field为空' })
         console.error("提交失败,image_field和image_id_field为空");
         return;
       }
